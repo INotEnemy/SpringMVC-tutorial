@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
-import ru.sevsu.db.tables.pojos.Table;
+import ru.sevsu.db.public_.tables.pojos.Table;
 import ru.sevsu.rest.configuration.URI;
 import ru.sevsu.rest.service.TableService;
 
@@ -16,7 +16,6 @@ import static ru.sevsu.rest.configuration.URI.Table.TABLES;
 
 
 @RestController(URI.INDEX)
-@Api(value = URI.INDEX)
 public class TableController {
 
     @Autowired

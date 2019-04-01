@@ -7,7 +7,7 @@ import ru.sevsu.rest.mapping.TableMapping;
 
 @Configuration
 public class MappingConfiguration {
-    
+
     @Bean
     public TableMapping getTableMapping() {
         return new TableMapping();

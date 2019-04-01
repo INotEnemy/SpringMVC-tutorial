@@ -11,7 +11,7 @@
 	<groupId>ru.sevsu</groupId>
 	<artifactId>SpringMVC-tutorial</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>JavaMVC</name>
+	<name>SpringMVC</name>
 	<description>Курс для студентов СевГУ</description>
 
 	<properties>
@@ -84,6 +84,11 @@
             <scope>provided</scope>
         </dependency>
 
+        <dependency>
+            <groupId>org.modelmapper</groupId>
+            <artifactId>modelmapper</artifactId>
+            <version>2.3.0</version>
+        </dependency>
 
     </dependencies>
 
@@ -141,7 +146,14 @@
                             <!-- Include all tables found from the PUBLIC schema -->
                             <includes>.*</includes>
                             <excludes></excludes>
-                            <inputSchema>public</inputSchema>
+                            <schemata>
+                                <schema>
+                                    <inputSchema>public</inputSchema>
+                                </schema>
+                                <schema>
+                                    <inputSchema>db</inputSchema>
+                                </schema>
+                            </schemata>
                         </database>
                         <!-- Generate classes for tables and records -->
                         <generate>

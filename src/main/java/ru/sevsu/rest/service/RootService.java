@@ -7,7 +7,7 @@ public interface RootService<T> {
 
     public List<T> find();
 
-    public Optional<T> findByName();
+    public Optional<T> findByName(String name);
 
     public T create(T inputPojo);
 

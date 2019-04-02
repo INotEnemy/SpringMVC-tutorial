@@ -6,7 +6,7 @@
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
 		<version>2.1.3.RELEASE</version>
-		<relativePath/> <!-- lookup parent from repository -->
+		<relativePath/>
 	</parent>
 	<groupId>ru.sevsu</groupId>
 	<artifactId>SpringMVC-tutorial</artifactId>
@@ -47,23 +47,11 @@
             <version>3.11.10</version>
         </dependency>
 
-        <!--<dependency>-->
-            <!--<groupId>org.jooq</groupId>-->
-            <!--<artifactId>jooq</artifactId>-->
-            <!--<version>3.11.10</version>-->
-        <!--</dependency>-->
-
         <dependency>
             <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>
             <version>42.2.5</version>
         </dependency>
-
-        <!--<dependency>-->
-            <!--<groupId>io.swagger</groupId>-->
-            <!--<artifactId>swagger-annotations</artifactId>-->
-            <!--<version>1.5.0</version>-->
-        <!--</dependency>-->
 
         <dependency>
             <groupId>io.springfox</groupId>
@@ -105,7 +93,6 @@
                 <version>3.11.10</version>
 
                 <executions>
-                    <!-- Generate the required class from the database -->
                     <execution>
                         <id>generate-postgres</id>
                         <phase>generate-sources</phase>
@@ -120,17 +107,10 @@
                     <groupId>org.postgresql</groupId>
                     <artifactId>postgresql</artifactId>
                     <version>42.2.5</version>
-
                 </dependency>
                 </dependencies>
-                    <!--
-                        Because we use the H2 database, we have to add it as the dependency
-                        of this plugin.
-                    -->
-
 
                 <configuration>
-                    <!-- Configure the database connection -->
                     <jdbc>
                         <driver>org.postgresql.Driver</driver>
                         <url>jdbc:postgresql://localhost:5050/postgres</url>
@@ -141,9 +121,7 @@
                     <generator>
                         <name>org.jooq.codegen.JavaGenerator</name>
                         <database>
-                            <!-- Configure the used database dialect -->
                             <name>org.jooq.meta.postgres.PostgresDatabase</name>
-                            <!-- Include all tables found from the PUBLIC schema -->
                             <includes>.*</includes>
                             <excludes></excludes>
                             <schemata>
@@ -155,14 +133,10 @@
                                 </schema>
                             </schemata>
                         </database>
-                        <!-- Generate classes for tables and records -->
+
                         <generate>
-                            <!--<records>true</records>-->
-                            <!--<tables>true</tables>-->
                             <pojos>true</pojos>
-                            <!--<daos>false</daos>-->
                         </generate>
-                        <!-- Configure the target package and directory -->
                         <target>
                             <packageName>ru.sevsu.db</packageName>
                             <directory>src/main/java</directory>

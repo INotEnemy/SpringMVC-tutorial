@@ -5,20 +5,26 @@ package ru.sevsu.db.db.tables;
 
 
 import java.math.BigDecimal;
+import java.util.Arrays;
+import java.util.List;
 
 import javax.annotation.Generated;
 
 import org.jooq.Field;
 import org.jooq.ForeignKey;
+import org.jooq.Index;
 import org.jooq.Name;
 import org.jooq.Record;
 import org.jooq.Schema;
 import org.jooq.Table;
 import org.jooq.TableField;
+import org.jooq.UniqueKey;
 import org.jooq.impl.DSL;
 import org.jooq.impl.TableImpl;
 
 import ru.sevsu.db.db.Db;
+import ru.sevsu.db.db.Indexes;
+import ru.sevsu.db.db.Keys;
 import ru.sevsu.db.db.tables.records.StudentRecord;
 
 
@@ -35,7 +41,7 @@ import ru.sevsu.db.db.tables.records.StudentRecord;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Student extends TableImpl<StudentRecord> {
 
-    private static final long serialVersionUID = -2007944902;
+    private static final long serialVersionUID = 27054858;
 
     /**
      * The reference instance of <code>db.student</code>
@@ -51,19 +57,19 @@ public class Student extends TableImpl<StudentRecord> {
     }
 
     /**
-     * The column <code>db.student.id</code>.
+     * The column <code>db.student.stud_num</code>.
      */
-    public final TableField<StudentRecord, Long> ID = createField("id", org.jooq.impl.SQLDataType.BIGINT, this, "");
+    public final TableField<StudentRecord, Integer> STUD_NUM = createField("stud_num", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
 
     /**
      * The column <code>db.student.fio</code>.
      */
-    public final TableField<StudentRecord, String> FIO = createField("fio", org.jooq.impl.SQLDataType.CLOB, this, "");
+    public final TableField<StudentRecord, String> FIO = createField("fio", org.jooq.impl.SQLDataType.CLOB.nullable(false), this, "");
 
     /**
-     * The column <code>db.student.grp_num</code>.
+     * The column <code>db.student.grpnum</code>.
      */
-    public final TableField<StudentRecord, Short> GRP_NUM = createField("grp_num", org.jooq.impl.SQLDataType.SMALLINT, this, "");
+    public final TableField<StudentRecord, Integer> GRPNUM = createField("grpnum", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
 
     /**
      * The column <code>db.student.grants</code>.
@@ -71,9 +77,14 @@ public class Student extends TableImpl<StudentRecord> {
     public final TableField<StudentRecord, BigDecimal> GRANTS = createField("grants", org.jooq.impl.SQLDataType.NUMERIC, this, "");
 
     /**
-     * The column <code>db.student.prof_num</code>.
+     * The column <code>db.student.profnum</code>.
      */
-    public final TableField<StudentRecord, Integer> PROF_NUM = createField("prof_num", org.jooq.impl.SQLDataType.INTEGER, this, "");
+    public final TableField<StudentRecord, Integer> PROFNUM = createField("profnum", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
+
+    /**
+     * The column <code>db.student.zachnum</code>.
+     */
+    public final TableField<StudentRecord, Integer> ZACHNUM = createField("zachnum", org.jooq.impl.SQLDataType.INTEGER, this, "");
 
     /**
      * Create a <code>db.student</code> table reference
@@ -114,6 +125,30 @@ public class Student extends TableImpl<StudentRecord> {
     @Override
     public Schema getSchema() {
         return Db.DB;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public List<Index> getIndexes() {
+        return Arrays.<Index>asList(Indexes.ID, Indexes.STUDENT_PKEY, Indexes.STUDENT_ZACHNUM_KEY);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public UniqueKey<StudentRecord> getPrimaryKey() {
+        return Keys.STUDENT_PKEY;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public List<UniqueKey<StudentRecord>> getKeys() {
+        return Arrays.<UniqueKey<StudentRecord>>asList(Keys.STUDENT_PKEY, Keys.STUDENT_ZACHNUM_KEY);
     }
 
     /**

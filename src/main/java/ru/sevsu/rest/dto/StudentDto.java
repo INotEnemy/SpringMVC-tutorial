@@ -14,6 +14,10 @@ import java.math.BigDecimal;
 public class StudentDto {
 
     @NonNull
+    @ApiModelProperty(notes = "Номер зачётной книжки", example = "01234")
+    private String     zachNum;
+
+    @NonNull
     @ApiModelProperty(notes = "Фамилия Имя Отчество студента", example = "Petrov V. A.")
     private String     fio;
 

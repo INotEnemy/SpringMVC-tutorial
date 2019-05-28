@@ -1,12 +1,12 @@
 package ru.sevsu.rest.service;
 
-
-
 import lombok.extern.slf4j.Slf4j;
+import org.jooq.impl.DSL;
 import org.springframework.stereotype.Service;
 import ru.sevsu.db.db.tables.pojos.Student;
 import ru.sevsu.db.db.tables.records.StudentRecord;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 
@@ -34,12 +34,12 @@ public class StudentService extends JooqAbstractService implements RootService<S
                 .fetchOptional(it -> it.into(Student.class));
     }
 
-    public Long getIdByName(String name) {
+    public Integer getIdByName(String name) {
 
-        Long id = null;
+        Integer id = null;
 
         try {
-            id = findByName(name).map(Student::getId)
+            id = findByName(name).map(Student::getStudNum)
                     .orElseThrow(() -> new Exception(format("Unable to load %s by name: %s", entity, name)));
 
         } catch (Exception ex) {
@@ -51,11 +51,11 @@ public class StudentService extends JooqAbstractService implements RootService<S
     @Override
     public Student create(Student inputPojo) {
 
-        inputPojo.setId(nextLongId());
+        inputPojo.setStudNum(nextLongId().intValue());
         final StudentRecord rec = context.newRecord(STUDENT, inputPojo);
         final StudentRecord inserted = context.insertInto(STUDENT)
                 .set(rec)
-                .returning(STUDENT.ID)
+                .returning(STUDENT.STUD_NUM)
                 .fetchOne();
 
         return inputPojo;
@@ -64,7 +64,7 @@ public class StudentService extends JooqAbstractService implements RootService<S
     @Override
     public Student update(Student inputPojo) {
 
-        inputPojo.setId(getIdByName(inputPojo.getFio()));
+        inputPojo.setStudNum(getIdByName(inputPojo.getFio()));
         StudentRecord rec = context.update(STUDENT)
                 .set(context.newRecord(STUDENT, inputPojo))
                 .where(STUDENT.FIO.equalIgnoreCase(inputPojo.getFio()))
@@ -83,5 +83,23 @@ public class StudentService extends JooqAbstractService implements RootService<S
         } catch (Exception ex) {
             ex.getMessage();
         }
+    }
+
+    public Integer count() {
+        return context.selectCount()
+                .from(STUDENT)
+                .fetchOne(0, int.class);
+    }
+
+    public BigDecimal maxVal() {
+        return context.select(DSL.max(STUDENT.GRANTS))
+                .from(STUDENT)
+                .fetchOne(0, BigDecimal.class);
+    }
+
+    public BigDecimal avgVal() {
+        return context.select(DSL.avg(STUDENT.GRANTS))
+                .from(STUDENT)
+                .fetchOne(0, BigDecimal.class);
     }
 }

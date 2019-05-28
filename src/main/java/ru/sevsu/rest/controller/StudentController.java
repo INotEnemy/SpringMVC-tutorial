@@ -15,10 +15,10 @@ import ru.sevsu.rest.mapping.StudentMapping;
 import ru.sevsu.rest.service.StudentService;
 
 import javax.validation.Valid;
+import java.math.BigDecimal;
 import java.util.List;
 
-import static ru.sevsu.rest.configuration.URI.Student.STUDENTS;
-import static ru.sevsu.rest.configuration.URI.Student.STUDENT_BY_FIO;
+import static ru.sevsu.rest.configuration.URI.Student.*;
 
 @RestController(STUDENTS)
 @Api(value = "Управление отображением таблицы студентов")
@@ -45,9 +45,7 @@ public class StudentController {
     public ResponseEntity<StudentDto> create (@Valid @RequestBody @ApiParam("Описание студента") StudentDto inputDto) {
 
         Student student = mapping.fromDto(inputDto);
-
         Student stud =  service.create(student);
-
         StudentDto dto = mapping.toDto(stud);
 
         return new ResponseEntity<StudentDto>(dto, HttpStatus.CREATED);
@@ -63,9 +61,7 @@ public class StudentController {
     public ResponseEntity<StudentDto> update (@Valid @RequestBody @ApiParam("Описание студента") StudentDto inputDto) {
 
         Student student = mapping.fromDto(inputDto);
-
         Student stud =  service.update(student);
-
         StudentDto dto = mapping.toDto(stud);
 
         return new ResponseEntity<StudentDto>(dto, HttpStatus.CREATED);
@@ -77,5 +73,23 @@ public class StudentController {
         service.delete(fio);
 
         return new ResponseEntity(HttpStatus.OK);
+    }
+
+    @RequestMapping(value = STUDENTS_COUNT, method = RequestMethod.GET)
+    @ApiOperation(value = "Подсчитывает число записей в таблице студент")
+    public ResponseEntity<Integer> count() {
+        return new ResponseEntity( service.count(),HttpStatus.OK);
+    }
+
+    @RequestMapping(value = STUDENTS_MAX, method = RequestMethod.GET)
+    @ApiOperation(value = "Находит максимальное значение стипендии")
+    public ResponseEntity<Integer> maxVal() {
+        return new ResponseEntity( service.maxVal(),HttpStatus.OK);
+    }
+
+    @RequestMapping(value = STUDENTS_AVG, method = RequestMethod.GET)
+    @ApiOperation(value = "Находит среднее значение стипендии")
+    public ResponseEntity<BigDecimal> avgVal() {
+        return new ResponseEntity( service.avgVal(),HttpStatus.OK);
     }
 }

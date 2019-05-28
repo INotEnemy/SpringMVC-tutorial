@@ -6,6 +6,7 @@ package ru.sevsu.db.public_;
 
 import javax.annotation.Generated;
 
+import ru.sevsu.db.public_.tables.MyCourses;
 import ru.sevsu.db.public_.tables.Table;
 
 
@@ -21,6 +22,11 @@ import ru.sevsu.db.public_.tables.Table;
 )
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Tables {
+
+    /**
+     * The table <code>public.my_courses</code>.
+     */
+    public static final MyCourses MY_COURSES = ru.sevsu.db.public_.tables.MyCourses.MY_COURSES;
 
     /**
      * The table <code>public.table</code>.

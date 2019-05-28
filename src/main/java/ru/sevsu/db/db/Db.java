@@ -16,7 +16,11 @@ import org.jooq.Table;
 import org.jooq.impl.SchemaImpl;
 
 import ru.sevsu.db.DefaultCatalog;
+import ru.sevsu.db.db.tables.Course;
+import ru.sevsu.db.db.tables.Exercise;
+import ru.sevsu.db.db.tables.StudCourseLink;
 import ru.sevsu.db.db.tables.Student;
+import ru.sevsu.db.db.tables.Teacher;
 
 
 /**
@@ -32,7 +36,7 @@ import ru.sevsu.db.db.tables.Student;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Db extends SchemaImpl {
 
-    private static final long serialVersionUID = 480161213;
+    private static final long serialVersionUID = 1842388597;
 
     /**
      * The reference instance of <code>db</code>
@@ -40,9 +44,29 @@ public class Db extends SchemaImpl {
     public static final Db DB = new Db();
 
     /**
+     * The table <code>db.course</code>.
+     */
+    public final Course COURSE = ru.sevsu.db.db.tables.Course.COURSE;
+
+    /**
+     * The table <code>db.exercise</code>.
+     */
+    public final Exercise EXERCISE = ru.sevsu.db.db.tables.Exercise.EXERCISE;
+
+    /**
+     * The table <code>db.stud_course_link</code>.
+     */
+    public final StudCourseLink STUD_COURSE_LINK = ru.sevsu.db.db.tables.StudCourseLink.STUD_COURSE_LINK;
+
+    /**
      * The table <code>db.student</code>.
      */
     public final Student STUDENT = ru.sevsu.db.db.tables.Student.STUDENT;
+
+    /**
+     * The table <code>db.teacher</code>.
+     */
+    public final Teacher TEACHER = ru.sevsu.db.db.tables.Teacher.TEACHER;
 
     /**
      * No further instances allowed
@@ -81,6 +105,10 @@ public class Db extends SchemaImpl {
 
     private final List<Table<?>> getTables0() {
         return Arrays.<Table<?>>asList(
-            Student.STUDENT);
+            Course.COURSE,
+            Exercise.EXERCISE,
+            StudCourseLink.STUD_COURSE_LINK,
+            Student.STUDENT,
+            Teacher.TEACHER);
     }
 }

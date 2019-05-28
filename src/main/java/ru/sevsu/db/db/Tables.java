@@ -6,7 +6,11 @@ package ru.sevsu.db.db;
 
 import javax.annotation.Generated;
 
+import ru.sevsu.db.db.tables.Course;
+import ru.sevsu.db.db.tables.Exercise;
+import ru.sevsu.db.db.tables.StudCourseLink;
 import ru.sevsu.db.db.tables.Student;
+import ru.sevsu.db.db.tables.Teacher;
 
 
 /**
@@ -23,7 +27,27 @@ import ru.sevsu.db.db.tables.Student;
 public class Tables {
 
     /**
+     * The table <code>db.course</code>.
+     */
+    public static final Course COURSE = ru.sevsu.db.db.tables.Course.COURSE;
+
+    /**
+     * The table <code>db.exercise</code>.
+     */
+    public static final Exercise EXERCISE = ru.sevsu.db.db.tables.Exercise.EXERCISE;
+
+    /**
+     * The table <code>db.stud_course_link</code>.
+     */
+    public static final StudCourseLink STUD_COURSE_LINK = ru.sevsu.db.db.tables.StudCourseLink.STUD_COURSE_LINK;
+
+    /**
      * The table <code>db.student</code>.
      */
     public static final Student STUDENT = ru.sevsu.db.db.tables.Student.STUDENT;
+
+    /**
+     * The table <code>db.teacher</code>.
+     */
+    public static final Teacher TEACHER = ru.sevsu.db.db.tables.Teacher.TEACHER;
 }

@@ -23,44 +23,48 @@ import javax.annotation.Generated;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Student implements Serializable {
 
-    private static final long serialVersionUID = -1841614213;
+    private static final long serialVersionUID = -601124496;
 
-    private Long       id;
+    private Integer    studNum;
     private String     fio;
-    private Short      grpNum;
+    private Integer    grpnum;
     private BigDecimal grants;
-    private Integer    profNum;
+    private Integer    profnum;
+    private Integer    zachnum;
 
     public Student() {}
 
     public Student(Student value) {
-        this.id = value.id;
+        this.studNum = value.studNum;
         this.fio = value.fio;
-        this.grpNum = value.grpNum;
+        this.grpnum = value.grpnum;
         this.grants = value.grants;
-        this.profNum = value.profNum;
+        this.profnum = value.profnum;
+        this.zachnum = value.zachnum;
     }
 
     public Student(
-        Long       id,
+        Integer    studNum,
         String     fio,
-        Short      grpNum,
+        Integer    grpnum,
         BigDecimal grants,
-        Integer    profNum
+        Integer    profnum,
+        Integer    zachnum
     ) {
-        this.id = id;
+        this.studNum = studNum;
         this.fio = fio;
-        this.grpNum = grpNum;
+        this.grpnum = grpnum;
         this.grants = grants;
-        this.profNum = profNum;
+        this.profnum = profnum;
+        this.zachnum = zachnum;
     }
 
-    public Long getId() {
-        return this.id;
+    public Integer getStudNum() {
+        return this.studNum;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setStudNum(Integer studNum) {
+        this.studNum = studNum;
     }
 
     public String getFio() {
@@ -71,12 +75,12 @@ public class Student implements Serializable {
         this.fio = fio;
     }
 
-    public Short getGrpNum() {
-        return this.grpNum;
+    public Integer getGrpnum() {
+        return this.grpnum;
     }
 
-    public void setGrpNum(Short grpNum) {
-        this.grpNum = grpNum;
+    public void setGrpnum(Integer grpnum) {
+        this.grpnum = grpnum;
     }
 
     public BigDecimal getGrants() {
@@ -87,23 +91,32 @@ public class Student implements Serializable {
         this.grants = grants;
     }
 
-    public Integer getProfNum() {
-        return this.profNum;
+    public Integer getProfnum() {
+        return this.profnum;
     }
 
-    public void setProfNum(Integer profNum) {
-        this.profNum = profNum;
+    public void setProfnum(Integer profnum) {
+        this.profnum = profnum;
+    }
+
+    public Integer getZachnum() {
+        return this.zachnum;
+    }
+
+    public void setZachnum(Integer zachnum) {
+        this.zachnum = zachnum;
     }
 
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder("Student (");
 
-        sb.append(id);
+        sb.append(studNum);
         sb.append(", ").append(fio);
-        sb.append(", ").append(grpNum);
+        sb.append(", ").append(grpnum);
         sb.append(", ").append(grants);
-        sb.append(", ").append(profNum);
+        sb.append(", ").append(profnum);
+        sb.append(", ").append(zachnum);
 
         sb.append(")");
         return sb.toString();

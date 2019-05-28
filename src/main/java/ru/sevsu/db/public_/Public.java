@@ -15,6 +15,7 @@ import org.jooq.Sequence;
 import org.jooq.impl.SchemaImpl;
 
 import ru.sevsu.db.DefaultCatalog;
+import ru.sevsu.db.public_.tables.MyCourses;
 import ru.sevsu.db.public_.tables.Table;
 
 
@@ -31,12 +32,17 @@ import ru.sevsu.db.public_.tables.Table;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Public extends SchemaImpl {
 
-    private static final long serialVersionUID = -1473971417;
+    private static final long serialVersionUID = 400742585;
 
     /**
      * The reference instance of <code>public</code>
      */
     public static final Public PUBLIC = new Public();
+
+    /**
+     * The table <code>public.my_courses</code>.
+     */
+    public final MyCourses MY_COURSES = ru.sevsu.db.public_.tables.MyCourses.MY_COURSES;
 
     /**
      * The table <code>public.table</code>.
@@ -80,6 +86,7 @@ public class Public extends SchemaImpl {
 
     private final List<org.jooq.Table<?>> getTables0() {
         return Arrays.<org.jooq.Table<?>>asList(
+            MyCourses.MY_COURSES,
             Table.TABLE);
     }
 }

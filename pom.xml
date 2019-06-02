@@ -126,9 +126,6 @@
                             <excludes></excludes>
                             <schemata>
                                 <schema>
-                                    <inputSchema>public</inputSchema>
-                                </schema>
-                                <schema>
                                     <inputSchema>db</inputSchema>
                                 </schema>
                             </schemata>

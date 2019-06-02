@@ -54,7 +54,7 @@ public class StudentController {
 
     @RequestMapping(
             value = STUDENT_BY_FIO,
-            method = RequestMethod.POST,
+            method = RequestMethod.PUT,
             produces = MediaType.APPLICATION_JSON_VALUE,
             consumes = {MediaType.APPLICATION_JSON_VALUE, "text/yaml"})
     @ApiOperation(value = "Обновляет студента")

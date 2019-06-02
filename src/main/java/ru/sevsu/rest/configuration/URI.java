@@ -4,9 +4,6 @@ public interface URI {
 
     String INDEX = "/";
 
-    interface Table {
-        String TABLES = "/tables";
-    }
 
     interface Student {
         String STUDENTS       = "/students";

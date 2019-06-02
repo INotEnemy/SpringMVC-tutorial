@@ -14,7 +14,6 @@ import org.jooq.Schema;
 import org.jooq.impl.CatalogImpl;
 
 import ru.sevsu.db.db.Db;
-import ru.sevsu.db.public_.Public;
 
 
 /**
@@ -43,11 +42,6 @@ public class DefaultCatalog extends CatalogImpl {
     public final Db DB = ru.sevsu.db.db.Db.DB;
 
     /**
-     * The schema <code>public</code>.
-     */
-    public final Public PUBLIC = ru.sevsu.db.public_.Public.PUBLIC;
-
-    /**
      * No further instances allowed
      */
     private DefaultCatalog() {
@@ -63,7 +57,6 @@ public class DefaultCatalog extends CatalogImpl {
 
     private final List<Schema> getSchemas0() {
         return Arrays.<Schema>asList(
-            Db.DB,
-            Public.PUBLIC);
+            Db.DB);
     }
 }

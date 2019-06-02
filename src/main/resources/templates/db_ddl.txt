@@ -1,0 +1,47 @@
+CREATE SCHEMA db AUTHORIZATION postgres;
+
+CREATE TABLE db.course (
+	course_num int4 NOT NULL,
+	teacher_num int4 NULL,
+	course_name text NOT NULL,
+	course_description text NULL,
+	tmp_course_name text NULL,
+	CONSTRAINT course_pkey PRIMARY KEY (course_num),
+	CONSTRAINT fk__course_teacher_num__teacher_teacher_num FOREIGN KEY (teacher_num) REFERENCES db.teacher(teacher_num) ON UPDATE CASCADE ON DELETE CASCADE
+);
+
+CREATE TABLE db.exercise (
+	ex_id int4 NOT NULL,
+	ex_date date NOT NULL,
+	ex_class_room int4 NOT NULL,
+	course_num int4 NULL,
+	ex_type text NULL,
+	CONSTRAINT exercise_pkey PRIMARY KEY (ex_id),
+	CONSTRAINT fk__exercise_course_num__course_course_num FOREIGN KEY (course_num) REFERENCES db.course(course_num) ON UPDATE CASCADE ON DELETE CASCADE
+);
+
+CREATE TABLE db.stud_course_link (
+	scl_id int4 NOT NULL,
+	stud_num int4 NULL,
+	course_num int4 NULL,
+	CONSTRAINT stud_course_link_pkey PRIMARY KEY (scl_id),
+	CONSTRAINT fk__stud_course_link_course_num__course_course_num FOREIGN KEY (course_num) REFERENCES db.course(course_num) ON UPDATE CASCADE ON DELETE CASCADE,
+	CONSTRAINT fk__stud_course_link_stud_num__student_stud_num FOREIGN KEY (stud_num) REFERENCES db.student(stud_num) ON UPDATE CASCADE ON DELETE CASCADE
+);
+
+CREATE TABLE db.student (
+	stud_num int4 NOT NULL,
+	fio text NOT NULL,
+	grpnum int4 NOT NULL,
+	grants numeric NULL,
+	profnum int4 NOT NULL,
+	zachnum int4 NULL,
+	CONSTRAINT student_pkey PRIMARY KEY (stud_num),
+	CONSTRAINT student_zachnum_key UNIQUE (zachnum)
+);
+
+CREATE TABLE db.teacher (
+	teacher_num int4 NOT NULL,
+	teacher_fio text NULL,
+	CONSTRAINT teacher_pkey PRIMARY KEY (teacher_num)
+);

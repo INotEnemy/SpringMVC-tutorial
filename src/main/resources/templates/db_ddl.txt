@@ -1,5 +1,22 @@
 CREATE SCHEMA db AUTHORIZATION postgres;
 
+CREATE TABLE db.student (
+	stud_num int4 NOT NULL,
+	fio text NOT NULL,
+	grpnum int4 NOT NULL,
+	grants numeric NULL,
+	profnum int4 NOT NULL,
+	zachnum int4 NULL,
+	CONSTRAINT student_pkey PRIMARY KEY (stud_num),
+	CONSTRAINT student_zachnum_key UNIQUE (zachnum)
+);
+
+CREATE TABLE db.teacher (
+	teacher_num int4 NOT NULL,
+	teacher_fio text NULL,
+	CONSTRAINT teacher_pkey PRIMARY KEY (teacher_num)
+);
+
 CREATE TABLE db.course (
 	course_num int4 NOT NULL,
 	teacher_num int4 NULL,
@@ -29,19 +46,5 @@ CREATE TABLE db.stud_course_link (
 	CONSTRAINT fk__stud_course_link_stud_num__student_stud_num FOREIGN KEY (stud_num) REFERENCES db.student(stud_num) ON UPDATE CASCADE ON DELETE CASCADE
 );
 
-CREATE TABLE db.student (
-	stud_num int4 NOT NULL,
-	fio text NOT NULL,
-	grpnum int4 NOT NULL,
-	grants numeric NULL,
-	profnum int4 NOT NULL,
-	zachnum int4 NULL,
-	CONSTRAINT student_pkey PRIMARY KEY (stud_num),
-	CONSTRAINT student_zachnum_key UNIQUE (zachnum)
-);
+CREATE SEQUENCE db.seq_get_id;
 
-CREATE TABLE db.teacher (
-	teacher_num int4 NOT NULL,
-	teacher_fio text NULL,
-	CONSTRAINT teacher_pkey PRIMARY KEY (teacher_num)
-);

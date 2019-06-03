@@ -9,7 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import ru.sevsu.db.db.tables.pojos.Student;
+import ru.sevsu.db.tables.pojos.Student;
 import ru.sevsu.rest.dto.StudentDto;
 import ru.sevsu.rest.mapping.StudentMapping;
 import ru.sevsu.rest.service.StudentService;

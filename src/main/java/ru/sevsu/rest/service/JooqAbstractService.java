@@ -2,7 +2,7 @@ package ru.sevsu.rest.service;
 
 import org.jooq.DSLContext;
 import org.springframework.beans.factory.annotation.Autowired;
-import ru.sevsu.db.db.Sequences;
+import ru.sevsu.db.Sequences;
 
 import java.math.BigInteger;
 

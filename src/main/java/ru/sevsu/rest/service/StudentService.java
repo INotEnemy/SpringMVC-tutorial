@@ -3,15 +3,15 @@ package ru.sevsu.rest.service;
 import lombok.extern.slf4j.Slf4j;
 import org.jooq.impl.DSL;
 import org.springframework.stereotype.Service;
-import ru.sevsu.db.db.tables.pojos.Student;
-import ru.sevsu.db.db.tables.records.StudentRecord;
+import ru.sevsu.db.tables.pojos.Student;
+import ru.sevsu.db.tables.records.StudentRecord;
 
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 
 import static java.lang.String.format;
-import static ru.sevsu.db.db.Tables.STUDENT;
+import static ru.sevsu.db.Tables.STUDENT;
 
 @Service
 @Slf4j

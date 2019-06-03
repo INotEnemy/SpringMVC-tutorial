@@ -27,7 +27,7 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
-		</dependency>
+		</dependency>g
 
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -112,10 +112,10 @@
 
                 <configuration>
                     <jdbc>
-                        <driver>spring.datasource.driverClassName</driver>
-                        <url>spring.datasource.url</url>
-                        <user>spring.datasource.username</user>
-                        <password>spring.datasource.password</password>
+                        <driver>org.postgresql.Driver</driver>
+                        <url>jdbc:postgresql://localhost:5432/postgres</url>
+                        <user>postgres</user>
+                        <password>123</password>
                     </jdbc>
 
                     <generator>

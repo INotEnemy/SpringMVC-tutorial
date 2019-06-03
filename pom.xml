@@ -112,10 +112,10 @@
 
                 <configuration>
                     <jdbc>
-                        <driver>org.postgresql.Driver</driver>
-                        <url>jdbc:postgresql://localhost:5050/postgres</url>
-                        <user>postgres</user>
-                        <password>123</password>
+                        <driver>spring.datasource.driverClassName</driver>
+                        <url>spring.datasource.url</url>
+                        <user>spring.datasource.username</user>
+                        <password>spring.datasource.password</password>
                     </jdbc>
 
                     <generator>

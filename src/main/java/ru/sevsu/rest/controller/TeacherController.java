@@ -13,7 +13,6 @@ import ru.sevsu.rest.mapping.TeacherMapping;
 import ru.sevsu.rest.dto.TeacherDto;
 import ru.sevsu.rest.service.TeacherService;
 
-
 import javax.validation.Valid;
 import java.util.List;
 

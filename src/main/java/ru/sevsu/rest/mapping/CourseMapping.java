@@ -32,6 +32,4 @@ public class CourseMapping extends PlainMapping <Course, CourseDto> {
         return courseDto;
     }
 
-
-
 }

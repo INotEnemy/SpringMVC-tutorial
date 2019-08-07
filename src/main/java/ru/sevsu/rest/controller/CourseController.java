@@ -40,13 +40,14 @@ public class CourseController {
             consumes = {MediaType.APPLICATION_JSON_VALUE, "text/yaml"})
     @ApiOperation(value = "Создаёт предмет")
     public ResponseEntity<CourseDto> create (@Valid @RequestBody @ApiParam("Описание предмета") CourseDto inputDto) {
+        if(service.checkTeacherAvailability(inputDto)){
+            Course course = mapping.fromDto(inputDto);
+            Course cour =  service.create(course);
+            CourseDto dto = mapping.toDto(cour);
 
-        Course course = mapping.fromDto(inputDto);
-        Course cour =  service.create(course);
-        CourseDto dto = mapping.toDto(cour);
-
-        return new ResponseEntity<CourseDto>(dto, HttpStatus.CREATED);
-
+            return new ResponseEntity<CourseDto>(dto, HttpStatus.CREATED);
+        }
+        else return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
 
     @RequestMapping(
@@ -68,7 +69,6 @@ public class CourseController {
     @ApiOperation(value = "Удаляет предмет")
     public ResponseEntity delete(@PathVariable @ApiParam("Название предмета") String name) {
         service.delete(name);
-
         return new ResponseEntity(HttpStatus.OK);
     }
 

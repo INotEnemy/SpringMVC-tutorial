@@ -5,6 +5,9 @@ import ru.sevsu.db.tables.pojos.Course;
 import ru.sevsu.rest.dto.CourseDto;
 import ru.sevsu.rest.service.TeacherService;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class CourseMapping extends PlainMapping <Course, CourseDto> {
 
     @Autowired
@@ -14,7 +17,6 @@ public class CourseMapping extends PlainMapping <Course, CourseDto> {
     public Course fromDto(CourseDto courseDto)
     {
         Course course = new Course();
-        course.setCourseNum(mapper.hashCode());
         course.setCourseName(courseDto.getCourseName());
         course.setTeacherNum(teacherService.getIdByName(courseDto.getTeacherNum()));
         course.setCourseDescription(courseDto.getCourseDescription());
@@ -31,5 +33,4 @@ public class CourseMapping extends PlainMapping <Course, CourseDto> {
         courseDto.setTmpCourseName(course.getTmpCourseName());
         return courseDto;
     }
-
 }

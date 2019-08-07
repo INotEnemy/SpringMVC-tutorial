@@ -4,7 +4,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.sevsu.db.tables.pojos.Course;
+import ru.sevsu.db.tables.pojos.Teacher;
 import ru.sevsu.db.tables.records.CourseRecord;
+import ru.sevsu.rest.dto.CourseDto;
 
 import java.util.List;
 import java.util.Optional;
@@ -90,6 +92,17 @@ public class CourseService extends JooqAbstractService implements RootService<Co
         return context.selectCount()
                 .from(COURSE)
                 .fetchOne(0, int.class);
+    }
+
+    public boolean checkTeacherAvailability (CourseDto courseDto){
+        boolean flag = false;
+        for (Teacher teacher : teacherService.find()){
+            if (teacher.getTeacherFio().equals((courseDto.getTeacherNum()))) {
+                flag = true;
+            }
+        }
+        return flag;
+
     }
 
 }

@@ -17,89 +17,107 @@ import static ru.sevsu.db.Tables.STUDENT;
 @Slf4j
 public class StudentService extends JooqAbstractService implements RootService<Student> {
 
-        final String entity = "student";
+    final String entity = "student";
 
-        public List<Student> find() {
-            return context.select()
-                    .from(STUDENT)
-                    .fetch()
-                    .into(Student.class);
+    public List<Student> find() {
+        return context.select()
+                .from(STUDENT)
+                .fetch()
+                .into(Student.class);
+    }
+
+    @Override
+    public Optional<Student> findByName(String name) {
+        return context.select()
+                .from(STUDENT)
+                .where(STUDENT.FIO.equalIgnoreCase(name))
+                .fetchOptional(it -> it.into(Student.class));
+    }
+
+    public Integer getIdByName(String name) {
+
+        Integer id = null;
+
+        try {
+            id = findByName(name).map(Student::getStudNum)
+                    .orElseThrow(() -> new Exception(format("Unable to load %s by name: %s", entity, name)));
+
+        } catch (Exception ex) {
+            ex.getMessage();
         }
+        return id;
+    }
 
-        @Override
-        public Optional<Student> findByName(String name) {
-            return context.select()
-                    .from(STUDENT)
+    public Optional<Student> findById(Integer id) {
+        return context.select()
+                .from(STUDENT)
+                .where(STUDENT.STUD_NUM.eq(id))
+                .fetchOptional(it -> it.into(Student.class));
+    }
+
+    public Student getById(Integer id) {
+        Student student = new Student();
+        try {
+            student = findById(id).orElseThrow(() -> new Exception(format("Unable to load %s by id: %s", entity, id)));
+        } catch (Exception x) {
+            x.getMessage();
+        }
+        return student;
+    }
+
+    @Override
+    public Student create(Student inputPojo) {
+
+        inputPojo.setStudNum(nextLongId().intValue());
+        final StudentRecord rec = context.newRecord(STUDENT, inputPojo);
+        final StudentRecord inserted = context.insertInto(STUDENT) //***!!!
+                .set(rec)
+                .returning(STUDENT.STUD_NUM)
+                .fetchOne();
+
+        return inputPojo;
+    }
+
+    @Override
+    public Student update(Student inputPojo) {
+
+        inputPojo.setStudNum(getIdByName(inputPojo.getFio()));
+        StudentRecord rec = context.update(STUDENT)
+                .set(context.newRecord(STUDENT, inputPojo))
+                .where(STUDENT.FIO.equalIgnoreCase(inputPojo.getFio()))
+                .returning()
+                .fetchOne();
+
+        return rec.map(it -> it.into(Student.class));
+    }
+
+    @Override
+    public void delete(String name) {
+
+        try {
+            int count = context.delete(STUDENT)
                     .where(STUDENT.FIO.equalIgnoreCase(name))
-                    .fetchOptional(it -> it.into(Student.class));
+                    .execute();
+        } catch (Exception ex) {
+            ex.getMessage();
         }
+    }
 
-        public Integer getIdByName(String name) {
+    public Integer count() {
+        return context.selectCount()
+                .from(STUDENT)
+                .fetchOne(0, int.class);
+    }
 
-            Integer id = null;
+    public BigDecimal maxVal() {
+        return context.select(DSL.max(STUDENT.GRANTS))
+                .from(STUDENT)
+                .fetchOne(0, BigDecimal.class);
+    }
 
-            try {
-                id = findByName(name).map(Student::getStudNum)
-                        .orElseThrow(() -> new Exception(format("Unable to load %s by name: %s", entity, name)));
-
-            } catch (Exception ex) {
-                ex.getMessage();
-            }
-            return id;
-        }
-
-        @Override
-        public Student create(Student inputPojo) {
-
-            inputPojo.setStudNum(nextLongId().intValue());
-            final StudentRecord rec = context.newRecord(STUDENT, inputPojo);
-            final StudentRecord inserted = context.insertInto(STUDENT)
-                    .set(rec)
-                    .returning(STUDENT.STUD_NUM)
-                    .fetchOne();
-
-            return inputPojo;
-        }
-
-        @Override
-        public Student update(Student inputPojo) {
-
-            inputPojo.setStudNum(getIdByName(inputPojo.getFio()));
-            StudentRecord rec = context.update(STUDENT)
-                    .set(context.newRecord(STUDENT, inputPojo))
-                    .where(STUDENT.FIO.equalIgnoreCase(inputPojo.getFio()))
-                    .returning().fetchOne();
-
-            return rec.map(it -> it.into(Student.class));
-        }
-
-        @Override
-        public void delete(String name) {
-
-            try {
-                int count = context.delete(STUDENT)
-                        .where(STUDENT.FIO.equalIgnoreCase(name))
-                        .execute();
-            } catch (Exception ex) {
-                ex.getMessage();
-            }
-        }
-
-        public Integer count() {
-            return context.selectCount()
-                    .from(STUDENT)
-                    .fetchOne(0, int.class);
-        }
-
-        public BigDecimal maxVal() {
-            return context.select(DSL.max(STUDENT.GRANTS))
-                    .from(STUDENT)
-                    .fetchOne(0, BigDecimal.class);
-        }
-
-        public BigDecimal avgVal() {
-            return context.select(DSL.avg(STUDENT.GRANTS))
-                    .from(STUDENT)
-                    .fetchOne(0, BigDecimal.class);
-        }
+    public BigDecimal avgVal() {
+        return context.select(DSL.avg(STUDENT.GRANTS))
+                .from(STUDENT)
+                .fetchOne(0, BigDecimal.class);
+    }
 }

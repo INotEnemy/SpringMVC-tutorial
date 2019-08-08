@@ -33,12 +33,12 @@ public class CourseController {
     private AggTeacherService aggTeacherService;
 
     @Autowired
-    private AggCourseService courseService;
+    private AggCourseService aggCourseService;
 
     @RequestMapping(value = COURSES , method = RequestMethod.GET)
     @ApiOperation(value = "Возвращает список всех предметов")
     public List<CourseDto> get() {
-       return courseService.listCourseDto();
+       return aggCourseService.listCourseDto();
     }
 
     @RequestMapping(
@@ -66,11 +66,14 @@ public class CourseController {
     @ApiOperation(value = "Обновляет предмет")
     public ResponseEntity<CourseDto> update (@Valid @RequestBody @ApiParam("Описание предмета") CourseDto inputDto) {
 
-        Course course = mapping.fromDto(inputDto);
-        Course cour =  service.update(course);
-        CourseDto dto = mapping.toDto(cour);
+        if(service.checkTeacherAvailability(inputDto)){
+            Course course = mapping.fromDto(inputDto);
+            Course cour =  service.update(course);
+            CourseDto dto = mapping.toDto(cour);
 
-        return new ResponseEntity<CourseDto>(dto, HttpStatus.CREATED);
+            return new ResponseEntity<CourseDto>(dto, HttpStatus.CREATED);
+        }
+        else return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
 
     @RequestMapping(value = COURSES_NAME, method = RequestMethod.DELETE)

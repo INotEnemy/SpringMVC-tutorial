@@ -52,6 +52,23 @@ public class CourseService extends JooqAbstractService implements RootService<Co
         return id;
     }
 
+    public Optional<Course> findById(Integer id) {
+        return context.select()
+                .from(COURSE)
+                .where(COURSE.COURSE_NUM.eq(id))
+                .fetchOptional(it -> it.into(Course.class));
+    }
+
+    public Course getById(Integer id) {
+        Course course = new Course();
+        try {
+            course = findById(id).orElseThrow(() -> new Exception(format("Unable to load %s by id: %s", entity, id)));
+        } catch (Exception x) {
+            x.getMessage();
+        }
+        return course;
+    }
+
     @Override
     public Course create(Course inputPojo) {
         inputPojo.setCourseNum(nextLongId().intValue());

@@ -1,8 +1,9 @@
 package ru.sevsu.rest.service;
 
 import lombok.extern.slf4j.Slf4j;
-import org.jooq.impl.DSL;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import ru.sevsu.db.tables.pojos.Course;
 import ru.sevsu.db.tables.pojos.Teacher;
 import ru.sevsu.db.tables.records.TeacherRecord;
 
@@ -31,6 +32,23 @@ public class TeacherService extends JooqAbstractService implements RootService<T
                     .from(TEACHER)
                     .where(TEACHER.TEACHER_FIO.equalIgnoreCase(name))
                     .fetchOptional(it -> it.into(Teacher.class));
+        }
+
+        public Optional<Teacher> findById (Integer id) {
+            return context.select()
+                    .from(TEACHER)
+                    .where(TEACHER.TEACHER_NUM.eq(id))
+                    .fetchOptional(it -> it.into(Teacher.class));
+        }
+
+        public Teacher getById (Integer id) {
+            Teacher teacher = new Teacher();
+            try {
+                teacher = findById(id).orElseThrow(() -> new Exception(format("Unable to load %s by id: %s", entity, id)));
+            }catch (Exception x) {
+                x.getMessage();
+            }
+            return teacher;
         }
 
         public Integer getIdByName(String name) {
@@ -78,10 +96,12 @@ public class TeacherService extends JooqAbstractService implements RootService<T
             try {
                 int count = context.delete(TEACHER)
                         .where(TEACHER.TEACHER_FIO.equalIgnoreCase(name))
-                        .execute();
+                       .execute();
+
             } catch (Exception ex) {
                 ex.getMessage();
             }
+
         }
 
         public Integer count() {

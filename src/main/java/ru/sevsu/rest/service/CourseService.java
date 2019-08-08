@@ -16,7 +16,7 @@ import static ru.sevsu.db.Tables.COURSE;
 
 @Service
 @Slf4j
-public class CourseService extends JooqAbstractService implements RootService<Course>{
+public class CourseService extends JooqAbstractService implements RootService<Course> {
 
     final String entity = "course";
 
@@ -94,15 +94,25 @@ public class CourseService extends JooqAbstractService implements RootService<Co
                 .fetchOne(0, int.class);
     }
 
-    public boolean checkTeacherAvailability (CourseDto courseDto){
+    public boolean checkTeacherAvailability(CourseDto courseDto) {
         boolean flag = false;
-        for (Teacher teacher : teacherService.find()){
-            if (teacher.getTeacherFio().equals((courseDto.getTeacherNum()))) {
+        for (Teacher teacher : teacherService.find()) {
+            if (teacher.getTeacherFio().equals((courseDto.getTeacherName()))) {
                 flag = true;
             }
         }
         return flag;
 
+    }
+
+    public Course findCourseByTeacherNum(Integer teacherNum) {
+        Course course = null;
+        for (Course searchCourse : find()) {
+            if (searchCourse.getTeacherNum().equals(teacherNum)) {
+                course = searchCourse;
+            }
+        }
+        return course;
     }
 
 }

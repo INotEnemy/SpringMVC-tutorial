@@ -12,6 +12,8 @@ import ru.sevsu.db.tables.pojos.Course;
 import ru.sevsu.rest.dto.CourseDto;
 import ru.sevsu.rest.mapping.CourseMapping;
 import ru.sevsu.rest.service.CourseService;
+import ru.sevsu.rest.service.agg.AggCourseService;
+import ru.sevsu.rest.service.agg.AggTeacherService;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -27,10 +29,16 @@ public class CourseController {
     @Autowired
     private CourseMapping mapping;
 
+    @Autowired
+    private AggTeacherService aggTeacherService;
+
+    @Autowired
+    private AggCourseService courseService;
+
     @RequestMapping(value = COURSES , method = RequestMethod.GET)
     @ApiOperation(value = "Возвращает список всех предметов")
-    public List<Course> get() {
-        return service.find();
+    public List<CourseDto> get() {
+       return courseService.listCourseDto();
     }
 
     @RequestMapping(
@@ -68,7 +76,7 @@ public class CourseController {
     @RequestMapping(value = COURSES_NAME, method = RequestMethod.DELETE)
     @ApiOperation(value = "Удаляет предмет")
     public ResponseEntity delete(@PathVariable @ApiParam("Название предмета") String name) {
-        service.delete(name);
+        aggTeacherService.deepDelete(name);
         return new ResponseEntity(HttpStatus.OK);
     }
 

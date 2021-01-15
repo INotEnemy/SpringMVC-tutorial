@@ -48,12 +48,29 @@ public class StudentService extends JooqAbstractService implements RootService<S
         return id;
     }
 
+    public Optional<Student> findById(Integer id) {
+        return context.select()
+                .from(STUDENT)
+                .where(STUDENT.STUD_NUM.eq(id))
+                .fetchOptional(it -> it.into(Student.class));
+    }
+
+    public Student getById(Integer id) {
+        Student student = new Student();
+        try {
+            student = findById(id).orElseThrow(() -> new Exception(format("Unable to load %s by id: %s", entity, id)));
+        } catch (Exception x) {
+            x.getMessage();
+        }
+        return student;
+    }
+
     @Override
     public Student create(Student inputPojo) {
 
         inputPojo.setStudNum(nextLongId().intValue());
         final StudentRecord rec = context.newRecord(STUDENT, inputPojo);
-        final StudentRecord inserted = context.insertInto(STUDENT)
+        final StudentRecord inserted = context.insertInto(STUDENT) //***!!!
                 .set(rec)
                 .returning(STUDENT.STUD_NUM)
                 .fetchOne();
@@ -68,7 +85,8 @@ public class StudentService extends JooqAbstractService implements RootService<S
         StudentRecord rec = context.update(STUDENT)
                 .set(context.newRecord(STUDENT, inputPojo))
                 .where(STUDENT.FIO.equalIgnoreCase(inputPojo.getFio()))
-                .returning().fetchOne();
+                .returning()
+                .fetchOne();
 
         return rec.map(it -> it.into(Student.class));
     }

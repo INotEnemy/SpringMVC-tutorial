@@ -11,7 +11,6 @@ public abstract class JooqAbstractService {
     @Autowired
     protected DSLContext context;
 
-
     protected Long nextLongId() {
        return context.nextval(Sequences.SEQ_GET_ID);
     }
